@@ -5,18 +5,17 @@ const OTP = require("../models/otpModel");
 class OTPController {
   // sendOtp verified page
   static async sendOtpGet(req, res) {
-    return res.render("index", { error: "" });
+    res.json({message:"sendOtp get});
   }
   // otpVerificationGet
   static async otpVerificationGet(req, res) {
-    return res.render("otpVerification", { error: "" });
+   res.json({message:"sendOtp get});
   }
 
   static async sendOTP(req, res) {
     const { email } = req.body;
     const existingUser = await OTP.findOne({ email });
     if (existingUser) {
-      // res.render("index", { error: "" });
       res
         .status(400)
         .json({ message: "user already exists,try another email" });
@@ -47,11 +46,9 @@ class OTPController {
     try {
       await transporter.sendMail(mailOptions);
       console.log("OTP sent via email");
-      // res.render("otpVerification", { error: "" });
       res.status(200).json({ message: "OTP sent successfully" });
     } catch (error) {
       console.log("Error sending OTP:", error);
-      // res.render("index", { error: "" });
       res.status(500).json({ error: "Failed to send OTP" });
     }
   }
@@ -63,7 +60,6 @@ class OTPController {
     const savedOTP = await OTP.findOne({ email }).sort({ createdAt: -1 });
 
     if (!savedOTP) {
-      // res.render("otpVerification", { error: "" });
       res.status(400).json({ error: "OTP not found or expired" });
     }
 
@@ -74,7 +70,6 @@ class OTPController {
       res.status(200).json({ message: "OTP verified successfully" });
     } else {
       // Invalid OTP
-      // res.render("otpVerification", { error: "" });
       res.status(400).json({ error: "Invalid OTP" });
     }
   }
