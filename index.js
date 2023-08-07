@@ -19,7 +19,7 @@ const DB_URI = process.env.MONGOLAB_URI;
 // Routes
 app.use("/api", userRoutes);
 app.use("/", require("./routes/otpRoutes.js"));
-// app.use("/payment", require("./routes/paymentRoutes"));
+app.use("/payment", require("./routes/paymentRoutes"));
 
 // Start the server
 mongoose
